@@ -1,6 +1,6 @@
 Model: EfficientNetB0
 Test accuracy: 0.8773
-Training time: 10.34 seconds
+Training time: 12.19 seconds
 
               precision    recall  f1-score   support
 

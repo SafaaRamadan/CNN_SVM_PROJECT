@@ -20,7 +20,10 @@ def prepare_data(test_size=0.2, random_state=42):
     x_train, x_val, y_train, y_val = train_test_split(
         x_subset, y_subset, test_size=test_size, stratify=y_subset, random_state=Random_state
     )
+    return (x_train, y_train), (x_val, y_val), (x_test, y_test), class_names
 
+def show_dataset_info():
+    (x_train, y_train), (x_val, y_val), (x_test, y_test), class_names = prepare_data()
     print(len(class_names), "classes:", class_names)
     print("Training images:", len(x_train))
     print("Validation images:", len(x_val))
@@ -30,7 +33,6 @@ def prepare_data(test_size=0.2, random_state=42):
     print("Testing image shape:", x_test.shape)
     print("num of classes:", len(np.unique(y_train)))
 
-    return (x_train, y_train), (x_val, y_val), (x_test, y_test), class_names
-
+    
 if __name__ == "__main__":
-    prepare_data()
+    show_dataset_info()

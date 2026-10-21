@@ -27,7 +27,18 @@ for name, model in display_models.items():
     images = preprocess(x_sample.copy())
 
     predictions = model.predict(images, verbose=0)
-    decoded = tf.keras.applications.resnet50.decode_predictions(predictions, top=3)
+    if name == "ResNet50":
+        decoded = tf.keras.applications.resnet50.decode_predictions(
+        predictions, top=3
+    )
+    elif name == "MobileNetV2":
+        decoded = tf.keras.applications.mobilenet_v2.decode_predictions(
+        predictions, top=3
+    )
+    elif name == "EfficientNetB0":
+        decoded = tf.keras.applications.efficientnet.decode_predictions(
+        predictions, top=3
+    )
 
     for i in range(5):
         true_label = int(y_test[i, 0])

@@ -1,6 +1,6 @@
 Model: MobileNetV2
 Test accuracy: 0.8290
-Training time: 12.82 seconds
+Training time: 11.93 seconds
 
               precision    recall  f1-score   support
 

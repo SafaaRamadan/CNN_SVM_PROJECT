@@ -20,9 +20,7 @@ tf.keras.utils.set_random_seed(RANDOM_STATE)
 
 
 
-
 (x_train, y_train), (x_val, y_val), _, class_names = prepare_data()
-
 
 
 model_configs = {
@@ -39,7 +37,6 @@ model_configs = {
         tf.keras.applications.efficientnet.preprocess_input,
     ),
 }
-
 
 
 def prepare_tf_dataset(images, labels, preprocess_fn, training=False):
@@ -74,7 +71,6 @@ def prepare_tf_dataset(images, labels, preprocess_fn, training=False):
     )
 
     return dataset.prefetch(tf.data.AUTOTUNE)
-
 
 
 def build_transfer_model(base_model_fn):
@@ -120,8 +116,6 @@ def build_transfer_model(base_model_fn):
     )
 
     return model
-
-
 
 
 def main():

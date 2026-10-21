@@ -1,6 +1,6 @@
 Model: ResNet50
 Test accuracy: 0.8821
-Training time: 31.91 seconds
+Training time: 27.74 seconds
 
               precision    recall  f1-score   support
 

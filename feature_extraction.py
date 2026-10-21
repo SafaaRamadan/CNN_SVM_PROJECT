@@ -66,12 +66,12 @@ def extract_features(model_name):
 
     # Load the trained model
     model = tf.keras.models.load_model(model_path)
-
+    print(model.summary())
     # Get the feature vector before Dropout and the final classifier
     feature_layer = model.get_layer("global_average_pooling2d")
     feature_extractor = tf.keras.Model(
-        inputs=model.input,
-        outputs=feature_layer.output
+        inputs= model.input,
+        outputs= feature_layer.output
     )
 
     preprocess_fn = preprocess_functions[model_name]
