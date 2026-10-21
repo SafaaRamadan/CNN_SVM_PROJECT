@@ -1,4 +1,3 @@
-# CNN_SVM_PROJECT
 # CNN Feature Extraction and SVM Image Classification
 
 ## Overview
