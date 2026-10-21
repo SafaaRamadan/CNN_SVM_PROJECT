@@ -1,0 +1,21 @@
+
+# Virtual environment
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Environment variables and secrets
+.env
+.env.*
+
+# Training outputs and large model files
+*.keras
+*.h5
+*.joblib
+
+# Test and log files
+.pytest_cache/
+*.log

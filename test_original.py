@@ -1,7 +1,6 @@
 
 import tensorflow as tf
 import numpy as np
-from tensorflow.keras.applications.resnet50 import (decode_predictions)
 from dataset import load_cifar10_dataset
 from models import display_models
 
@@ -28,7 +27,7 @@ for name, model in display_models.items():
     images = preprocess(x_sample.copy())
 
     predictions = model.predict(images, verbose=0)
-    decoded = decode_predictions(predictions, top=3)
+    decoded = tf.keras.applications.resnet50.decode_predictions(predictions, top=3)
 
     for i in range(5):
         true_label = int(y_test[i, 0])
