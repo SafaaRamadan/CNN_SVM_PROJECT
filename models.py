@@ -2,21 +2,21 @@ import tensorflow as tf
 
 IMAGE_SIZE = (224 , 224)
 
-print("Loading pretrained ResNet50 model...")
+print("Loading pretrained ResNet50 model")
 resnet_model = tf.keras.applications.ResNet50(
     weights="imagenet",
     include_top=True,
     input_shape=(IMAGE_SIZE[0], IMAGE_SIZE[1], 3)
 )
 
-print("Loading pretrained MobileNetV2 model...")
+print("Loading pretrained MobileNetV2 model")
 mobilenet_model = tf.keras.applications.MobileNetV2(    
     weights="imagenet",
     include_top=True,   
     input_shape=(IMAGE_SIZE[0], IMAGE_SIZE[1], 3)
 )
 
-print("Loading pretrained EfficientNetB0 model...")
+print("Loading pretrained EfficientNetB0 model")
 efficientnet_model = tf.keras.applications.EfficientNetB0(  
     weights="imagenet",
     include_top=True,
@@ -35,5 +35,5 @@ def display_model_info():
         print("Output_shape: ", model.output_shape)
         print("Number of parameters:", model.count_params())
 
-def main():
+if __name__ == "__main__":
     display_model_info()

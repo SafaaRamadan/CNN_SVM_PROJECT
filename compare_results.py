@@ -13,7 +13,6 @@ results_path = os.path.join(
 
 results = pd.read_csv(results_path)
 
-# Sort models by mean test accuracy
 results = results.sort_values(
     by="Mean_Test_Accuracy",
     ascending=False
@@ -27,12 +26,11 @@ table_path = os.path.join(
     RESULTS_DIR,
     "final_comparison.csv"
 )
-
 results.to_csv(table_path, index=False)
 
-# Plot mean test accuracy
-plt.figure(figsize=(10, 6))
 
+
+plt.figure(figsize=(10, 6))
 bars = plt.bar(
     results["Model"],
     results["Mean Test Accuracy (%)"]
@@ -46,7 +44,7 @@ plt.ylabel("Mean Test Accuracy (%)")
 plt.ylim(0, 100)
 plt.xticks(rotation=15)
 
-# Add accuracy labels above each bar
+
 for bar, accuracy in zip(
     bars,
     results["Mean Test Accuracy (%)"]

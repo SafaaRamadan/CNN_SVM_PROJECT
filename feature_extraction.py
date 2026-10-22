@@ -19,10 +19,6 @@ tf.keras.utils.set_random_seed(RANDOM_STATE)
 x_svm_train = np.concatenate([x_train, x_val], axis=0)
 y_svm_train = np.concatenate([y_train, y_val], axis=0)
 
-# The test set stays separate
-print("SVM training images:", x_svm_train.shape)
-print("Test images:", x_test.shape)
-
 
 model_names = [
     "ResNet50",
@@ -56,7 +52,7 @@ def prepare_images(images, preprocess_fn):
 
 
 def extract_features(model_name):
-    print(f"\nExtracting features using {model_name}...")
+    print(f"\nExtracting features using {model_name}")
 
     model_path = os.path.join(
         "saved_models",
@@ -64,7 +60,6 @@ def extract_features(model_name):
         f"{model_name}.keras"
     )
 
-    # Load the trained model
     model = tf.keras.models.load_model(model_path)
     print(model.summary())
     # Get the feature vector before Dropout and the final classifier
@@ -81,20 +76,12 @@ def extract_features(model_name):
     test_dataset = prepare_images(x_test, preprocess_fn)
 
     # Extract features
-    train_features = feature_extractor.predict(
-        train_dataset,
-        verbose=1
-    )
-
-    test_features = feature_extractor.predict(
-        test_dataset,
-        verbose=1
-    )
+    train_features = feature_extractor.predict(train_dataset, verbose=1)
+    test_features = feature_extractor.predict(test_dataset, verbose=1)
 
     print("Training features:", train_features.shape)
     print("Test features:", test_features.shape)
 
-   
     output_path = os.path.join(
         OUTPUT_DIR,
         f"{model_name}_features.npz"
@@ -115,12 +102,6 @@ def extract_features(model_name):
     tf.keras.backend.clear_session()
 
 
-def main():
+if __name__ == "__main__":
     for model_name in model_names:
         extract_features(model_name)
-
-    print("\nFeature extraction completed!")
-
-
-if __name__ == "__main__":
-    main()

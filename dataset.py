@@ -33,7 +33,7 @@ def show_dataset_info():
     train_labels = y_train.flatten()
     test_labels = y_test.flatten()
 
-    print("\n========== IMAGES PER CLASS ==========")
+    print("\n IMAGES PER CLASS IN TRAINING SAMPLES:")
 
     for i, class_name in enumerate(class_names):
         train_count = np.sum(train_labels == i)
@@ -46,7 +46,7 @@ def show_dataset_info():
             f"Total: {train_count + test_count:5d}"
         )
 
-    print("\nDisplaying sample training images...")
+    print("\nDisplaying sample training images")
 
     plt.figure(figsize=(12, 6))
 

@@ -1,4 +1,3 @@
-
 import tensorflow as tf
 import numpy as np
 from dataset import load_cifar10_dataset
@@ -18,11 +17,8 @@ preprocessing_functions = {
 }
 
 for name, model in display_models.items():
-
-    print(f"\n{'=' * 50}")
     print(f"Testing {name}")
-    print("=" * 50)
-
+  
     preprocess = preprocessing_functions[name]
     images = preprocess(x_sample.copy())
 

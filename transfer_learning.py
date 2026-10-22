@@ -53,13 +53,9 @@ def prepare_tf_dataset(images, labels, preprocess_fn, training=False):
 
     dataset = dataset.batch(BATCH_SIZE)
 
-    def preprocess_batch(images, labels):
+    def preprocess_batch(images, labels):#ensuring that the imgages have the right data type and size for the model.
         images = tf.cast(images, tf.float32)
-
-        images = tf.image.resize(
-            images,
-            IMAGE_SIZE
-        )
+        images = tf.image.resize(images,IMAGE_SIZE)
 
         images = preprocess_fn(images)
 
@@ -88,10 +84,7 @@ def build_transfer_model(base_model_fn):
         shape=(*IMAGE_SIZE, 3)
     )
 
-    features = base_model(
-        inputs,
-        training=False
-    )
+    features = base_model(inputs, training=False) #inference mode to avoid updating batch normalization statistics during training.
 
     x = tf.keras.layers.GlobalAveragePooling2D()(features)
     x = tf.keras.layers.Dropout(0.3)(x)
@@ -118,32 +111,19 @@ def build_transfer_model(base_model_fn):
     return model
 
 
-def main():
 
+if __name__ == "__main__":
     results = {}
-
+    
     for model_name, (base_model_fn, preprocess_fn) in model_configs.items():
 
         print(f"Transfer Learning: {model_name}")
       
-
         tf.keras.backend.clear_session()
-
-        train_dataset = prepare_tf_dataset(
-            x_train,
-            y_train,
-            preprocess_fn,
-            training=True
-        )
-
-        val_dataset = prepare_tf_dataset(
-            x_val,
-            y_val,
-            preprocess_fn
-        )
+        train_dataset = prepare_tf_dataset(x_train, y_train, preprocess_fn, training=True)
+        val_dataset = prepare_tf_dataset(x_val, y_val, preprocess_fn)
 
         model = build_transfer_model(base_model_fn)
-
         model.summary()
 
         history = model.fit(
@@ -186,7 +166,3 @@ def main():
             f"Validation Accuracy: "
             f"{result['validation_accuracy']:.4f}"
         )
-
-
-if __name__ == "__main__":
-    main()

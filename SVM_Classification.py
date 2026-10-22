@@ -30,9 +30,6 @@ TEST_SIZE = 0.20
 def train_and_evaluate(model_name, run_number, random_state):
     
     print(f"Model: {model_name} | Run: {run_number} | Random State: {random_state}")
-    
-
-    # Load extracted features
     file_path = os.path.join(
         FEATURES_DIR,
         f"{model_name}_features.npz"
@@ -202,7 +199,7 @@ def main():
     )
 
     summary_df = summary_df.sort_values(
-        by="Mean_Test_Accuracy",
+        by="Mean_Validation_Accuracy",
         ascending=False
     )
 

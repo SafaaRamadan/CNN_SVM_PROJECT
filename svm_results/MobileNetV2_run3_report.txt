@@ -3,7 +3,7 @@ Run: 3
 Random state: 2026
 Validation accuracy: 0.8310
 Test accuracy: 0.8238
-Training time: 5.71 seconds
+Training time: 10.43 seconds
 
 Classification Report:
               precision    recall  f1-score   support
