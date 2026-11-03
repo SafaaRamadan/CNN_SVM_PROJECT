@@ -1,30 +1,40 @@
-# CNN Feature Extraction and SVM Image Classification
+# CNN Features + SVM on CIFAR-10: a rigorous benchmark
 
-## Overview
-This project explores image classification on the CIFAR-10 dataset by combining Convolutional Neural Networks (CNNs) with Support Vector Machines (SVMs).
+Do classical classifiers on frozen ImageNet features compete with end-to-end fine-tuning when labelled data is scarce?
 
-Three pretrained CNN architectures—ResNet50, MobileNetV2, and EfficientNetB0—are used to extract image features. SVM classifiers are then trained on these features and evaluated on the CIFAR-10 test set.
+**Live demo:** _add your Hugging Face Spaces link here_
 
-## Key Features
-- CNN-based feature extraction using transfer learning.
-- SVM classification using features extracted from pretrained models.
-- Performance comparison across three CNN architectures.
-- Evaluation using test accuracy and training time.
-- Reproducible experiments using a fixed random seed.
+## What this project does
+- Extracts frozen features from 7 backbones: 5 ImageNet CNNs (DenseNet121, VGG16, InceptionV3, ResNet50, EfficientNetV2B0) plus 2 modern self-/language-supervised ViTs (DINOv2, CLIP).
+- Compares tuned RBF-SVM against Logistic Regression, Linear SVM, kNN and Random Forest on identical features.
+- Hyper-parameters tuned with cross-validation on training data only; the test set is used once for reporting.
+- Reports mean ± std over multiple seeds, macro-F1, fit time and per-image inference latency.
+- Data-efficiency curve (accuracy vs training size), confusion matrices, optional fine-tuning baseline.
+- Per-class F1, calibration (ECE + reliability diagrams) and t-SNE of the feature spaces.
+- Grad-CAM (closed-form CAM of a linear probe on the frozen backbone), ONNX export with TF-vs-ONNX latency benchmark.
+- `src/custom_dataset.py`: the same pipeline on any image-folder dataset (e.g. plant disease, chest X-ray).
+- Streamlit demo with low-confidence rejection, and a FastAPI `/predict` endpoint.
 
-## Models
-- ResNet50
-- MobileNetV2
-- EfficientNetB0
+## Results
+_Paste your table from `results/summary.csv` and the plots here after running._
 
-## Dataset
-CIFAR-10, containing 60,000 color images across 10 classes.
+![comparison](results/comparison.png)
+![data efficiency](results/data_efficiency.png)
 
-## Best Result
-ResNet50 feature extraction combined with an SVM classifier achieved **88.21% test accuracy** in the current experiment.
+## Reproduce
+```bash
+pip install -r requirements.txt
+python scripts/run_all.py --quick     # smoke test
+python scripts/run_all.py             # full run (add --skip_hf to skip DINOv2/CLIP)
+python -m src.finetune --backbone DenseNet121   # optional fine-tuning baseline
+python -m src.gradcam --backbone DenseNet121    # Grad-CAM figure
+python -m src.export_onnx                       # ONNX + latency table
+python -m src.custom_dataset --data_dir data/<your_dataset> --backbone DINOv2
+streamlit run app/streamlit_app.py
+uvicorn api.main:app --port 8000
+pytest
+```
 
-## Tech Stack
-Python, TensorFlow, Keras, Scikit-learn, NumPy, Pandas, Matplotlib, and Streamlit (for the application interface).
-
-## Objective
-To compare CNN architectures as feature extractors and evaluate how effectively their learned representations support traditional machine learning classification using SVM.
+## Notes and limitations
+- Features come from frozen ImageNet backbones; the SVM is compared against other classifiers on the same features, not against "transfer learning" that changes the features.
+- CIFAR-10 images are 32x32 upsampled to 224/299 px; real photos are a domain shift, hence the confidence threshold in the demo.

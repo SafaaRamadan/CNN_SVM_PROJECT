@@ -1,0 +1,17 @@
+tensorflow>=2.16
+scikit-learn>=1.3
+numpy
+pandas
+matplotlib
+joblib
+pyyaml
+pillow
+streamlit
+fastapi
+uvicorn
+python-multipart
+pytest
+torch
+transformers
+tf2onnx
+onnxruntime
