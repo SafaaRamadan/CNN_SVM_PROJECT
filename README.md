@@ -16,7 +16,6 @@ Do classical classifiers on frozen ImageNet features compete with end-to-end fin
 - Streamlit demo with low-confidence rejection, and a FastAPI `/predict` endpoint.
 
 ## Results
-_Paste your table from `results/summary.csv` and the plots here after running._
 
 ![comparison](results/comparison.png)
 ![data efficiency](results/data_efficiency.png)
