@@ -1,0 +1,11 @@
+seeds: [42, 100, 2026]
+n_pool: 10000          # stratified images from the 50k train set whose features are extracted
+train_size: 5000       # training samples drawn from the pool for the main comparison
+curve_sizes: [500, 1000, 2500, 5000, 10000]   # data-efficiency curve
+batch_size: 64
+backbones: [DenseNet121, VGG16, InceptionV3, ResNet50, EfficientNetV2B0, DINOv2, CLIP]
+svm_grid:
+  svm__C: [1, 10]
+  svm__gamma: [scale]
+cv_folds: 3
+low_confidence_threshold: 0.5
