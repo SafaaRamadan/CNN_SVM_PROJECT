@@ -11,7 +11,6 @@ Do classical classifiers on frozen ImageNet features compete with end-to-end fin
 - Data-efficiency curve (accuracy vs training size), confusion matrices, optional fine-tuning baseline.
 - Per-class F1, calibration (ECE + reliability diagrams) and t-SNE of the feature spaces.
 - Grad-CAM (closed-form CAM of a linear probe on the frozen backbone), ONNX export with TF-vs-ONNX latency benchmark.
-- `src/custom_dataset.py`: the same pipeline on any image-folder dataset (e.g. plant disease, chest X-ray).
 - Streamlit demo with low-confidence rejection, and a FastAPI `/predict` endpoint.
 
 
