@@ -2,7 +2,6 @@
 
 Do classical classifiers on frozen ImageNet features compete with end-to-end fine-tuning when labelled data is scarce?
 
-**Live demo:** _add your Hugging Face Spaces link here_
 
 ## What this project does
 - Extracts frozen features from 7 backbones: 5 ImageNet CNNs (DenseNet121, VGG16, InceptionV3, ResNet50, EfficientNetV2B0) plus 2 modern self-/language-supervised ViTs (DINOv2, CLIP).
