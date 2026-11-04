@@ -15,11 +15,7 @@ Do classical classifiers on frozen ImageNet features compete with end-to-end fin
 - `src/custom_dataset.py`: the same pipeline on any image-folder dataset (e.g. plant disease, chest X-ray).
 - Streamlit demo with low-confidence rejection, and a FastAPI `/predict` endpoint.
 
-## Results
-_Paste your table from `results/summary.csv` and the plots here after running._
 
-![comparison](results/comparison.png)
-![data efficiency](results/data_efficiency.png)
 
 ## Reproduce
 ```bash
