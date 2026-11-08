@@ -15,3 +15,4 @@ torch
 transformers
 tf2onnx
 onnxruntime
+requests

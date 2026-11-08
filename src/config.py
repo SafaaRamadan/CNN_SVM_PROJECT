@@ -4,7 +4,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 FEATURES_DIR = ROOT / "features"
 RESULTS_DIR = ROOT / "results"
-MODELS_DIR = ROOT / "models"
+MODELS_DIR = ROOT / "svm_results"
 CLASS_NAMES = ["airplane", "automobile", "bird", "cat", "deer",
                "dog", "frog", "horse", "ship", "truck"]
 

@@ -1,0 +1,31 @@
+backbone,n_train,classifier,seed,test_acc
+EfficientNetV2B0,500,SVM-RBF,42,0.8343
+EfficientNetV2B0,500,Logistic Regression,42,0.8445
+EfficientNetV2B0,500,SVM-RBF,100,0.8402
+EfficientNetV2B0,500,Logistic Regression,100,0.8507
+EfficientNetV2B0,500,SVM-RBF,2026,0.8332
+EfficientNetV2B0,500,Logistic Regression,2026,0.8433
+EfficientNetV2B0,1000,SVM-RBF,42,0.8593
+EfficientNetV2B0,1000,Logistic Regression,42,0.8627
+EfficientNetV2B0,1000,SVM-RBF,100,0.8546
+EfficientNetV2B0,1000,Logistic Regression,100,0.8618
+EfficientNetV2B0,1000,SVM-RBF,2026,0.8561
+EfficientNetV2B0,1000,Logistic Regression,2026,0.8596
+EfficientNetV2B0,2500,SVM-RBF,42,0.8816
+EfficientNetV2B0,2500,Logistic Regression,42,0.8772
+EfficientNetV2B0,2500,SVM-RBF,100,0.8772
+EfficientNetV2B0,2500,Logistic Regression,100,0.8755
+EfficientNetV2B0,2500,SVM-RBF,2026,0.878
+EfficientNetV2B0,2500,Logistic Regression,2026,0.8782
+EfficientNetV2B0,5000,SVM-RBF,42,0.8917
+EfficientNetV2B0,5000,Logistic Regression,42,0.882
+EfficientNetV2B0,5000,SVM-RBF,100,0.8913
+EfficientNetV2B0,5000,Logistic Regression,100,0.8877
+EfficientNetV2B0,5000,SVM-RBF,2026,0.8922
+EfficientNetV2B0,5000,Logistic Regression,2026,0.8866
+EfficientNetV2B0,10000,SVM-RBF,42,0.9061
+EfficientNetV2B0,10000,Logistic Regression,42,0.8936
+EfficientNetV2B0,10000,SVM-RBF,100,0.9061
+EfficientNetV2B0,10000,Logistic Regression,100,0.8936
+EfficientNetV2B0,10000,SVM-RBF,2026,0.9061
+EfficientNetV2B0,10000,Logistic Regression,2026,0.8936

@@ -1,0 +1,42 @@
+{
+  "DenseNet121": {
+    "test_acc": 0.9013,
+    "best_params": {
+      "svm__C": 10,
+      "svm__gamma": "scale"
+    },
+    "cv_acc": 0.8915001278172209
+  },
+  "VGG16": {
+    "test_acc": 0.8466,
+    "best_params": {
+      "svm__C": 10,
+      "svm__gamma": "scale"
+    },
+    "cv_acc": 0.8363008766383536
+  },
+  "InceptionV3": {
+    "test_acc": 0.8706,
+    "best_params": {
+      "svm__C": 10,
+      "svm__gamma": "scale"
+    },
+    "cv_acc": 0.8624998372662702
+  },
+  "ResNet50": {
+    "test_acc": 0.896,
+    "best_params": {
+      "svm__C": 10,
+      "svm__gamma": "scale"
+    },
+    "cv_acc": 0.8930002478352215
+  },
+  "EfficientNetV2B0": {
+    "test_acc": 0.9061,
+    "best_params": {
+      "svm__C": 10,
+      "svm__gamma": "scale"
+    },
+    "cv_acc": 0.9010002679932061
+  }
+}
