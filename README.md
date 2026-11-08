@@ -2,7 +2,6 @@
 
 Do classical classifiers on frozen ImageNet features compete with end-to-end fine-tuning when labelled data is scarce?
 
-**Live demo:** _add your Hugging Face Spaces link here_
 
 ## What this project does
 - Extracts frozen features from 7 backbones: 5 ImageNet CNNs (DenseNet121, VGG16, InceptionV3, ResNet50, EfficientNetV2B0) plus 2 modern self-/language-supervised ViTs (DINOv2, CLIP).
@@ -12,7 +11,6 @@ Do classical classifiers on frozen ImageNet features compete with end-to-end fin
 - Data-efficiency curve (accuracy vs training size), confusion matrices, optional fine-tuning baseline.
 - Per-class F1, calibration (ECE + reliability diagrams) and t-SNE of the feature spaces.
 - Grad-CAM (closed-form CAM of a linear probe on the frozen backbone), ONNX export with TF-vs-ONNX latency benchmark.
-- `src/custom_dataset.py`: the same pipeline on any image-folder dataset (e.g. plant disease, chest X-ray).
 - Streamlit demo with low-confidence rejection, and a FastAPI `/predict` endpoint.
 
 
