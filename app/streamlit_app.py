@@ -2,18 +2,16 @@
 import sys
 from pathlib import Path
 
+import joblib
 import pandas as pd
-import requests
 import streamlit as st
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from src.config import RESULTS_DIR, CLASS_NAMES
+from src.config import RESULTS_DIR, MODELS_DIR, CLASS_NAMES
+from src.features import extract_single
 
-# --------------------------------------------------
-# Page configuration
-# --------------------------------------------------
 
 st.set_page_config(
     page_title="CNN + SVM | CIFAR-10",
@@ -28,16 +26,32 @@ st.caption(
     "RBF-SVM • Benchmarking and Image Prediction"
 )
 
+
 # --------------------------------------------------
-# API configuration
+# Model loading
 # --------------------------------------------------
 
-try:
-    API_URL = st.secrets["API_URL"]
-except (KeyError, FileNotFoundError):
-    API_URL = "http://127.0.0.1:8000"
+AVAILABLE_MODELS = [
+    "DenseNet121",
+    "EfficientNetV2B0",
+    "InceptionV3",
+    "ResNet50",
+    "VGG16"
+]
 
-API_URL = API_URL.rstrip("/")
+
+@st.cache_resource
+def load_svm(backbone):
+    model_path = MODELS_DIR / f"{backbone}_svm.joblib"
+
+    if not model_path.exists():
+        raise FileNotFoundError(
+            f"Model not found: {model_path}"
+        )
+
+    return joblib.load(model_path)
+
+
 # --------------------------------------------------
 # Image prediction
 # --------------------------------------------------
@@ -45,18 +59,12 @@ API_URL = API_URL.rstrip("/")
 st.header("🔍 Image Prediction")
 
 st.write(
-    "Upload a CIFAR-10 image and select a trained CNN + SVM model."
+    "Upload an image and select a trained CNN + SVM model."
 )
 
 selected_model = st.selectbox(
     "Select Model",
-    [
-        "DenseNet121",
-        "EfficientNetV2B0",
-        "InceptionV3",
-        "ResNet50",
-        "VGG16"
-    ]
+    AVAILABLE_MODELS
 )
 
 uploaded_file = st.file_uploader(
@@ -83,62 +91,57 @@ if uploaded_file is not None:
         if st.button("Predict Image", type="primary"):
 
             try:
-                uploaded_file.seek(0)
+                with st.spinner(
+                    "Loading model and extracting image features..."
+                ):
 
-                files = {
-                    "file": (
-                        uploaded_file.name,
-                        uploaded_file.getvalue(),
-                        uploaded_file.type
+                    svm = load_svm(selected_model)
+
+                    features = extract_single(
+                        selected_model,
+                        image
                     )
-                }
 
-                response = requests.post(
-                    f"{API_URL}/predict",
-                    files=files,
-                    params={"model": selected_model},
-                    timeout=120
+                    probabilities = svm.predict_proba(features)[0]
+
+                    top_indices = probabilities.argsort()[::-1][:3]
+
+                    predictions = [
+                        {
+                            "class": CLASS_NAMES[int(svm.classes_[i])],
+                            "probability": float(probabilities[i])
+                        }
+                        for i in top_indices
+                    ]
+
+                st.success("Prediction completed!")
+
+                best = predictions[0]
+
+                st.metric(
+                    "Predicted Class",
+                    best["class"]
                 )
 
-                if response.status_code == 200:
-
-                    result = response.json()
-
-                    st.success("Prediction completed!")
-
-                    st.metric(
-                        "Predicted Class",
-                        result.get(
-                            "predicted_class",
-                            result.get("class_name", "Unknown")
-                        )
-                    )
-
-                    if "confidence" in result:
-                        st.metric(
-                            "Confidence",
-                            f"{result['confidence'] * 100:.2f}%"
-                        )
-
-                    st.json(result)
-
-                else:
-                    st.error(
-                        f"API Error {response.status_code}: "
-                        f"{response.text}"
-                    )
-
-            except requests.exceptions.ConnectionError:
-                st.error(
-                    "Cannot connect to FastAPI. "
-                    "Make sure the API server is running."
+                st.metric(
+                    "Confidence",
+                    f"{best['probability'] * 100:.2f}%"
                 )
 
-            except requests.exceptions.Timeout:
-                st.error("Prediction request timed out.")
+                st.subheader("Top 3 Predictions")
+
+                for item in predictions:
+
+                    st.write(
+                        f"**{item['class']}** — "
+                        f"{item['probability'] * 100:.2f}%"
+                    )
+
+                    st.progress(item["probability"])
 
             except Exception as e:
-                st.error(f"Error: {e}")
+                st.error(f"Prediction error: {e}")
+
 
 # --------------------------------------------------
 # Benchmark results
@@ -183,8 +186,6 @@ else:
             s.classifier.nunique()
         )
 
-        # Model comparison
-
         st.subheader("Model Comparison")
 
         st.dataframe(
@@ -192,8 +193,6 @@ else:
             hide_index=True,
             use_container_width=True
         )
-
-        # Performance analysis
 
         st.subheader("Performance Analysis")
 
@@ -206,8 +205,6 @@ else:
                     str(image_path),
                     use_container_width=True
                 )
-
-        # Confusion matrices
 
         st.subheader("Confusion Matrices")
 
@@ -226,4 +223,4 @@ else:
 
 st.divider()
 
-st.success("CNN + SVM Benchmark Dashboard is ready.")
+st.success("CNN + SVM Dashboard is ready.")
