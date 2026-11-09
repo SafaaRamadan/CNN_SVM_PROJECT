@@ -9,3 +9,4 @@ data/
 *.joblib
 *.onnx
 .pytest_cache/
+!svm_results/DenseNet121_svm.joblib
